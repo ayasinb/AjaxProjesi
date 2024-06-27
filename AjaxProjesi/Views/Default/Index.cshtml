@@ -34,6 +34,38 @@
     <br />
 </div>
 
+<hr />
+
+<div class="alert alert-danger">Ürün Silme Ekranı</div>
+<div>
+    <input type="text" placeholder="SilinecekÜrün ID " id="productdeleteid" class="form-control" />
+    <br />
+  
+</div>
+
+<hr />
+
+<div class="alert alert-warning">Ürün Detay Ekranı</div>
+<div>
+    <input type="text" placeholder="Detay Ürün ID" id="productgetid" class="form-control" />
+    <br />
+
+</div>
+<hr />
+<div class="alert alert-info"> Ürün Güncelleme Ekranı</div>
+<div>
+    <input type="text" placeholder="Güncellenecek Ürün ID Girişi" id="productidedit" class="form-control" />
+    <br />
+    <input type="text" placeholder="Ürün Adı Girişi" id="productnameedit" class="form-control" />
+    <br />
+    <input type="text" placeholder="Ürün Fiyat Girişi" id="productpriceedit" class="form-control" />
+    <br />
+    <input type="text" placeholder="Ürün Stok Girişi" id="productstockedit" class="form-control" />
+    <br />
+</div>
+
+
+
 
 <script>
 
@@ -86,5 +118,47 @@
             }
         });
     });
+
+    $("#btndelete").click(function () {
+        let id = $("#productdeleteid").val();
+        $.ajax({
+            url: "/Default/DeleteProduct/" + id,
+            type: "post",
+            contentType: "json",
+            success: function (funk3) {
+                swal("Tebrikler!", "Ürün Başarıyla Silindi.", "success");
+            }
+        });
+    });
+
+    $("#btnget").click(function() {
+        let id = $("#productgetid").val();
+    $.ajax({
+        contentType: "application/json",
+        dataType: "json",
+        url: "/Default/GetProduct/" + id,
+        success: function (funk4) {
+            let result = jQuery.parseJSON(funk4);
+            console.log(result);
+        }
+    });
+    });
+
+    $("#btnupdate").click(function () {
+        let values = {
+            ProductId: $("#productidedit").val(),
+            ProductName: $("#productnameedit").val(),
+            Price: $("#productpriceedit").val(),
+            Quantity: $("#productstockedit").val()
+        };
+        $.ajax({
+            url: "/Default/UpdateProduct/",
+            data: values,
+            success: function (funk5) {
+                swal("Tebrikler!", "Ürün Başarıyla Güncellendi.", "success");
+            }
+        });
+    });
+
 
 </script>
